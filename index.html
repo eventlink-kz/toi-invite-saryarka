@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Құдалыққа шақыру</title>
+  <meta name="description" content="Құдалыққа арналған онлайн шақыру" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <style>
+    :root{
+      --bg:#fff8f3;
+      --card:#fffdf9;
+      --ink:#332824;
+      --muted:#8b766b;
+      --line:#ead7c9;
+      --accent:#9f2f51;
+      --accent2:#bf8c54;
+      --soft:#fbefe8;
+      --shadow:0 24px 80px rgba(122,64,41,.12);
+      --r:32px;
+    }
+    *{box-sizing:border-box;font-family:"Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;}
+    html{scroll-behavior:smooth;}
+    body{margin:0;background:
+      radial-gradient(circle at 0 85%, rgba(159,47,81,.10), transparent 33%),
+      radial-gradient(circle at 93% 0, rgba(191,140,84,.13), transparent 35%),
+      linear-gradient(180deg,#fffaf6 0%,#fff6ef 100%);color:var(--ink);}
+    a{color:inherit;text-decoration:none}
+    .page{min-height:100vh;overflow:hidden;position:relative}
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(255,250,246,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(234,215,201,.7)}
+    .nav{max-width:1180px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--accent);letter-spacing:-.03em;font-size:20px}
+    .brand .mark{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#f7eadf;color:#bf8c54;font-size:17px}
+    .menu{display:flex;align-items:center;gap:24px;font-weight:700;color:#7c6b62;font-size:14px}
+    .lang{display:flex;gap:6px;padding:4px;border:1px solid var(--line);border-radius:999px;background:#fff}
+    .lang button{border:0;background:transparent;border-radius:999px;padding:9px 13px;font-weight:800;color:#9b7d70;cursor:pointer}
+    .lang button.active{background:var(--accent);color:#fff;box-shadow:0 10px 26px rgba(159,47,81,.22)}
+    .hero{max-width:1180px;margin:56px auto 0;padding:0 20px}
+    .hero-card{background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(255,250,245,.92));border:1px solid var(--line);border-radius:44px;box-shadow:var(--shadow);padding:64px 58px;display:grid;grid-template-columns:minmax(0,1.35fr) 330px;gap:46px;align-items:center;position:relative;overflow:hidden;animation:rise .75s ease both}
+    .hero-card:before,.hero-card:after{content:"";position:absolute;border:1px solid rgba(159,47,81,.12);border-radius:50%;pointer-events:none}
+    .hero-card:before{width:260px;height:260px;right:-90px;top:-110px}.hero-card:after{width:210px;height:210px;left:-110px;bottom:-105px}
+    .eyebrow{font-size:13px;font-weight:800;letter-spacing:.28em;color:var(--accent2);text-transform:uppercase;margin-bottom:22px}
+    h1{margin:0;color:var(--accent);font-weight:800;letter-spacing:-.055em;line-height:1.04;font-size:clamp(42px,6.5vw,82px);max-width:760px}
+    .lead{margin:28px 0 0;color:#827167;font-size:clamp(17px,2.1vw,22px);line-height:1.75;max-width:780px;font-weight:500}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+    .btn{border:0;border-radius:999px;padding:17px 26px;font-size:16px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:.22s ease;min-height:56px}
+    .btn.primary{background:var(--accent);color:#fff;box-shadow:0 16px 36px rgba(159,47,81,.25)}
+    .btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--line)}
+    .btn:hover{transform:translateY(-2px)}
+    .date-card{justify-self:end;width:100%;max-width:300px;background:#fffdf9;border:1px solid var(--line);border-radius:30px;padding:36px 26px;text-align:center;box-shadow:0 18px 45px rgba(122,64,41,.08);position:relative;z-index:1}
+    .date-card .month{color:var(--accent2);font-weight:800;letter-spacing:.22em;text-transform:uppercase;font-size:14px}.date-card .day{color:var(--accent);font-size:96px;line-height:.95;font-weight:800;letter-spacing:-.08em}.date-card .year{color:var(--accent2);font-weight:800;letter-spacing:.18em}.date-card .time{margin-top:22px;color:#77685f;font-weight:800}
+    section{max-width:1180px;margin:26px auto 0;padding:0 20px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.info{background:#fffdf9;border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:0 14px 36px rgba(122,64,41,.06);animation:rise .65s ease both}.info b{display:block;color:var(--accent);font-size:18px;margin-bottom:8px}.info span{color:#7d6d64;line-height:1.55;font-weight:500}
+    .section-card{margin-top:18px;background:#fffdf9;border:1px solid var(--line);border-radius:36px;padding:40px;box-shadow:0 16px 46px rgba(122,64,41,.07)}
+    h2{margin:0 0 14px;color:var(--accent);font-size:clamp(30px,4vw,48px);letter-spacing:-.045em;line-height:1.08}.text{color:#7d6d64;line-height:1.75;font-size:18px;font-weight:500}
+    .route{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap}.route .place{font-size:22px;font-weight:800;color:var(--ink);margin-top:6px}.route .small{color:var(--muted);font-weight:600;margin-top:4px}
+    .form{display:grid;gap:18px;margin-top:22px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-weight:800;margin-bottom:8px;color:#463732}.input,.select,.textarea{width:100%;border:1px solid var(--line);border-radius:20px;background:#fff;padding:17px 18px;font-size:16px;color:#443630;outline:none;transition:.2s}.input:focus,.select:focus,.textarea:focus{border-color:rgba(159,47,81,.45);box-shadow:0 0 0 4px rgba(159,47,81,.08)}.textarea{min-height:110px;resize:vertical}.hidden{display:none!important}.notice{padding:14px 16px;border-radius:18px;background:#fff3f6;color:var(--accent);font-weight:800;display:none}.notice.show{display:block}.footer{max-width:1180px;margin:28px auto 96px;padding:0 20px;text-align:center;color:#b1a099;font-weight:700;font-size:13px}.mobile-cta{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:70}.mobile-cta .btn{width:100%;box-shadow:0 12px 30px rgba(159,47,81,.28)}
+    @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:880px){.menu a{display:none}.hero{margin-top:22px}.hero-card{grid-template-columns:1fr;padding:34px 22px;border-radius:32px;gap:28px}.date-card{justify-self:stretch;max-width:none;padding:26px}.date-card .day{font-size:78px}.grid{grid-template-columns:1fr}.section-card{padding:28px 22px;border-radius:30px}.form-row{grid-template-columns:1fr}.actions .btn{width:100%}.mobile-cta{display:block}.footer{margin-bottom:94px}h1{font-size:clamp(38px,12vw,58px);letter-spacing:-.06em}.lead{font-size:17px;line-height:1.65}.nav{padding:10px 14px}.brand{font-size:17px}.lang button{padding:8px 10px}.hero-card{box-shadow:0 16px 46px rgba(122,64,41,.10)}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="nav">
+      <a class="brand" href="#top"><span class="mark">❦</span><span data-i18n="brand">Құдалыққа шақыру</span></a>
+      <nav class="menu"><a href="#details" data-i18n="navDetails">Мәліметтер</a><a href="#place" data-i18n="navPlace">Мекенжай</a><a href="#rsvp" data-i18n="navRsvp">Жауап беру</a></nav>
+      <div class="lang"><button type="button" class="active" data-lang="kk">Қаз</button><button type="button" data-lang="ru">Рус</button></div>
+    </div>
+  </header>
+
+  <main id="top" class="hero">
+    <div class="hero-card">
+      <div>
+        <div class="eyebrow" data-i18n="eyebrow">Ең жақын жандарға арналған ерекше шақыру</div>
+        <h1 data-i18n="title">Құрметті ағайын-туыс, қадірлі жақындар!</h1>
+        <p class="lead" data-i18n="lead">Сіздерді отбасымыз үшін маңызды әрі қуанышты күн — құдалық дастарханына шын жүректен шақырамыз. Бұл кездесуде біз ең жақын жандарымызбен қуанышымызды бөлісіп, ақ баталарыңызды алғымыз келеді.</p>
+        <div class="actions"><a href="#rsvp" class="btn primary" data-i18n="btnRsvp">Қатысуыңызды растау</a><a href="#details" class="btn secondary" data-i18n="btnDetails">Мәліметтерді көру</a></div>
+      </div>
+      <aside class="date-card" aria-label="event date">
+        <div class="month" data-i18n="month">тамыз</div><div class="day">15</div><div class="year">2026</div><div class="time" data-i18n="dateTime">Сенбі · 17:00</div>
+      </aside>
+    </div>
+  </main>
+
+  <section id="details">
+    <div class="grid">
+      <div class="info"><b data-i18n="dateLabel">Күні</b><span data-i18n="dateValue">15 тамыз 2026, сенбі</span></div>
+      <div class="info"><b data-i18n="timeLabel">Уақыты</b><span>17:00</span></div>
+      <div class="info"><b data-i18n="cityLabel">Қала</b><span data-i18n="cityValue">Семей қаласы</span></div>
+    </div>
+  </section>
+
+  <section id="place">
+    <div class="section-card route">
+      <div><h2 data-i18n="placeTitle">Өтетін орны</h2><div class="place" data-i18n="restaurant">Сары Арқа рестораны</div><div class="small" data-i18n="address">Семей қаласы</div><p class="text" data-i18n="placeText">Қонақтарды 17:00-де күтеміз. Ыңғайлы болу үшін 2GIS арқылы маршрутты алдын ала қарап алыңыз.</p></div>
+      <a id="gisLink" class="btn primary" target="_blank" rel="noopener" data-i18n="routeBtn">2GIS арқылы маршрут</a>
+    </div>
+  </section>
+
+  <section id="rsvp">
+    <div class="section-card">
+      <h2 data-i18n="rsvpTitle">Қатысуыңызды растаңыз</h2>
+      <p class="text" data-i18n="rsvpText">Қонақтарды лайықты қарсы алу үшін жауабыңыз бізге маңызды.</p>
+      <form id="rsvpForm" class="form" target="submitFrame" method="POST">
+        <input type="hidden" name="lang" id="langField" value="kk">
+        <input type="hidden" name="submittedAt" id="submittedAt">
+        <div class="form-row">
+          <div class="field"><label for="name" data-i18n="nameLabel">Атыңыз</label><input class="input" id="name" name="name" required data-i18n-placeholder="namePlaceholder" placeholder="Мысалы, Айдана"></div>
+          <div class="field"><label for="attendance" data-i18n="attendanceLabel">Келе аласыз ба?</label><select class="select" id="attendance" name="attendance" required><option value="" data-i18n="chooseAnswer">Жауапты таңдаңыз</option><option value="yes" data-i18n="yesOption">Иә, келемін</option><option value="no" data-i18n="noOption">Өкінішке қарай, келе алмаймын</option></select></div>
+        </div>
+        <div class="form-row hidden" id="companionWrap">
+          <div class="field"><label for="companion" data-i18n="companionLabel">Қалай келесіз?</label><select class="select" id="companion" name="companion"><option value="alone" data-i18n="aloneOption">Жалғыз келемін</option><option value="with" data-i18n="withOption">Жұбайыммен келемін</option></select></div>
+          <div class="field hidden" id="companionNameWrap"><label for="companionName" data-i18n="companionNameLabel">Жұбайыңыздың аты</label><input class="input" id="companionName" name="companionName" data-i18n-placeholder="companionPlaceholder" placeholder="Жұбайыңыздың аты"></div>
+        </div>
+        <div class="field"><label for="comment" data-i18n="commentLabel">Пікір / тілек</label><textarea class="textarea" id="comment" name="comment" data-i18n-placeholder="commentPlaceholder" placeholder="Тілегіңізді немесе ескертпеңізді қалдыруға болады"></textarea></div>
+        <button class="btn primary" type="submit" data-i18n="submitBtn">Жауап жіберу</button>
+        <div id="notice" class="notice" data-i18n="savedNotice">Жауабыңыз қабылданды. Рақмет!</div>
+      </form>
+      <iframe name="submitFrame" id="submitFrame" class="hidden"></iframe>
+    </div>
+  </section>
+
+  <div class="footer">created by event-link · +7 700 961 90 49</div>
+  <div class="mobile-cta"><a href="#rsvp" class="btn primary" data-i18n="mobileBtn">Қатысуымды растау</a></div>
+</div>
+
+<script>
+const dict={
+ kk:{brand:"Құдалыққа шақыру",navDetails:"Мәліметтер",navPlace:"Мекенжай",navRsvp:"Жауап беру",eyebrow:"Ең жақын жандарға арналған ерекше шақыру",title:"Құрметті ағайын-туыс, қадірлі жақындар!",lead:"Сіздерді отбасымыз үшін маңызды әрі қуанышты күн — құдалық дастарханына шын жүректен шақырамыз. Бұл кездесуде біз ең жақын жандарымызбен қуанышымызды бөлісіп, ақ баталарыңызды алғымыз келеді.",btnRsvp:"Қатысуыңызды растау",btnDetails:"Мәліметтерді көру",month:"тамыз",dateTime:"Сенбі · 17:00",dateLabel:"Күні",dateValue:"15 тамыз 2026, сенбі",timeLabel:"Уақыты",cityLabel:"Қала",cityValue:"Семей қаласы",placeTitle:"Өтетін орны",restaurant:"Сары Арқа рестораны",address:"Семей қаласы",placeText:"Қонақтарды 17:00-де күтеміз. Ыңғайлы болу үшін 2GIS арқылы маршрутты алдын ала қарап алыңыз.",routeBtn:"2GIS арқылы маршрут",rsvpTitle:"Қатысуыңызды растаңыз",rsvpText:"Қонақтарды лайықты қарсы алу үшін жауабыңыз бізге маңызды.",nameLabel:"Атыңыз",namePlaceholder:"Мысалы, Айдана",attendanceLabel:"Келе аласыз ба?",chooseAnswer:"Жауапты таңдаңыз",yesOption:"Иә, келемін",noOption:"Өкінішке қарай, келе алмаймын",companionLabel:"Қалай келесіз?",aloneOption:"Жалғыз келемін",withOption:"Жұбайыммен келемін",companionNameLabel:"Жұбайыңыздың аты",companionPlaceholder:"Жұбайыңыздың аты",commentLabel:"Пікір / тілек",commentPlaceholder:"Тілегіңізді немесе ескертпеңізді қалдыруға болады",submitBtn:"Жауап жіберу",savedNotice:"Жауабыңыз қабылданды. Рақмет!",mobileBtn:"Қатысуымды растау"},
+ ru:{brand:"Приглашение на кудалык",navDetails:"Детали",navPlace:"Адрес",navRsvp:"Ответить",eyebrow:"Особое приглашение для самых близких",title:"Дорогие родные и близкие!",lead:"От всей души приглашаем вас на важный для нашей семьи день — кудалык. Мы хотим разделить эту радость с самыми близкими людьми и будем счастливы получить ваши тёплые пожелания и благословение.",btnRsvp:"Подтвердить участие",btnDetails:"Посмотреть детали",month:"август",dateTime:"Суббота · 17:00",dateLabel:"Дата",dateValue:"15 августа 2026, суббота",timeLabel:"Время",cityLabel:"Город",cityValue:"город Семей",placeTitle:"Место проведения",restaurant:"Ресторан Сары Арка",address:"город Семей",placeText:"Ждём гостей к 17:00. Для удобства можно заранее построить маршрут через 2GIS.",routeBtn:"Открыть маршрут в 2GIS",rsvpTitle:"Подтвердите участие",rsvpText:"Ваш ответ важен, чтобы мы могли достойно встретить гостей.",nameLabel:"Ваше имя",namePlaceholder:"Например, Айдана",attendanceLabel:"Вы сможете прийти?",chooseAnswer:"Выберите ответ",yesOption:"Да, буду",noOption:"К сожалению, не смогу",companionLabel:"Как вы придёте?",aloneOption:"Буду один/одна",withOption:"Буду с супругом/супругой",companionNameLabel:"Имя супруга/супруги",companionPlaceholder:"Имя супруга/супруги",commentLabel:"Комментарий / пожелание",commentPlaceholder:"Можно оставить пожелание или уточнение",submitBtn:"Отправить ответ",savedNotice:"Ваш ответ принят. Спасибо!",mobileBtn:"Подтвердить участие"}
+};
+let lang='kk';
+const cfg=window.EVENT_LINK_CONFIG||{};
+document.getElementById('gisLink').href=cfg.TWO_GIS_URL||'#';
+function setLang(next){lang=next;document.documentElement.lang=next;document.getElementById('langField').value=next;document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===next));document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(dict[next][k]) el.textContent=dict[next][k];});document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const k=el.dataset.i18nPlaceholder;if(dict[next][k]) el.placeholder=dict[next][k];});}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+const attendance=document.getElementById('attendance'), companion=document.getElementById('companion'), companionWrap=document.getElementById('companionWrap'), companionNameWrap=document.getElementById('companionNameWrap'), companionName=document.getElementById('companionName');
+function syncForm(){const yes=attendance.value==='yes';companionWrap.classList.toggle('hidden',!yes);const withC=yes&&companion.value==='with';companionNameWrap.classList.toggle('hidden',!withC);companionName.required=withC;}
+attendance.addEventListener('change',syncForm);companion.addEventListener('change',syncForm);
+const form=document.getElementById('rsvpForm');
+form.addEventListener('submit',(event)=>{document.getElementById('submittedAt').value=new Date().toISOString();const url=(cfg.APPS_SCRIPT_URL||'').trim();if(url){form.action=url;}else{event.preventDefault();const data=Object.fromEntries(new FormData(form).entries());const saved=JSON.parse(localStorage.getItem('eventLinkResponses')||'[]');saved.push({...data,timestamp:new Date().toISOString()});localStorage.setItem('eventLinkResponses',JSON.stringify(saved));}setTimeout(()=>{document.getElementById('notice').classList.add('show');form.reset();syncForm();},350);});
+setLang('kk');syncForm();
+</script>
+</body>
+</html>
