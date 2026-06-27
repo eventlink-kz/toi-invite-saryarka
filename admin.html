@@ -1,99 +1,144 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ответы гостей</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Админка — ответы гостей</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet">
   <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
-    :root{--bg:#fff8f3;--card:#fffdf9;--ink:#302724;--muted:#8a756a;--line:#ead7c9;--accent:#9f2f51;--green:#2f8a58;--red:#b23b3b;--shadow:0 20px 70px rgba(122,64,41,.10)}
-    *{box-sizing:border-box;font-family:"Noto Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
-    body{margin:0;background:linear-gradient(180deg,#fffaf6,#fff6ef);color:var(--ink)}
-    .wrap{max-width:980px;margin:0 auto;padding:22px 16px 70px}
-    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:10px 0 18px}.head h1{margin:0;color:var(--accent);font-size:clamp(30px,5vw,52px);line-height:1.05;letter-spacing:-.05em}.sub{margin-top:8px;color:var(--muted);font-weight:600}.btn{border:0;border-radius:18px;background:var(--accent);color:#fff;padding:15px 20px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 12px 28px rgba(159,47,81,.20);white-space:nowrap}.btn:active{transform:translateY(1px)}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(122,64,41,.05)}.stat b{display:block;color:var(--accent);font-size:30px;letter-spacing:-.04em}.stat span{color:var(--muted);font-weight:700;font-size:13px}.list{display:grid;gap:10px}.guest{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(122,64,41,.05);display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}.name{font-size:18px;font-weight:800;color:var(--ink)}.meta{margin-top:7px;color:var(--muted);font-weight:600;line-height:1.55}.badge{border-radius:999px;padding:9px 13px;font-weight:800;font-size:13px}.yes{background:#eef8f2;color:var(--green)}.no{background:#fff0f0;color:var(--red)}.empty{background:#fff;border:1px dashed var(--line);border-radius:24px;padding:34px;text-align:center;color:var(--muted);font-weight:700;line-height:1.6}.footer{text-align:center;color:#b1a099;font-weight:700;font-size:13px;margin-top:28px}
-    @media(max-width:720px){.head{display:grid}.btn{width:100%}.stats{grid-template-columns:repeat(2,1fr)}.guest{grid-template-columns:1fr}.badge{width:max-content}.wrap{padding-top:14px}.stat b{font-size:26px}}
+    :root{--bg:#fbf6ee;--paper:#fffdf8;--ink:#332c27;--muted:#7c7168;--line:#ead9c2;--gold:#b8904f;--gold-dark:#8f6a31;--yes:#278455;--no:#9b3b3b;--shadow:0 16px 42px rgba(83,58,27,.10);--radius:24px}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#fffaf2,var(--bg));font-family:"Noto Sans",system-ui,sans-serif;color:var(--ink)}
+    .wrap{width:min(980px,100%);margin:0 auto;padding:24px 14px 44px}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.title h1{font-family:"Noto Serif",serif;margin:0;color:#5a3d29;font-size:clamp(28px,5vw,44px);line-height:1.05}.title p{margin:10px 0 0;color:var(--muted);font-weight:600}.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid rgba(184,144,79,.32);background:#fffdf8;border-radius:15px;min-height:48px;padding:13px 18px;font-weight:800;color:#664b2f;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#b8904f,#9f7434);color:#fff;border-color:transparent;box-shadow:0 12px 26px rgba(164,118,53,.18)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat{border:1px solid rgba(184,144,79,.22);background:var(--paper);border-radius:20px;padding:18px;box-shadow:var(--shadow)}.stat b{display:block;font-size:30px;line-height:1;color:#4a3828}.stat span{display:block;margin-top:7px;color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+    .panel{border:1px solid rgba(184,144,79,.22);background:rgba(255,253,248,.92);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.panel-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--line);background:#fffaf2}.panel-top h2{font-size:19px;margin:0}.search{width:min(330px,100%);border:1px solid rgba(184,144,79,.25);border-radius:14px;background:#fff;padding:12px 14px;outline:none}.list{display:grid;gap:0}.row{display:grid;grid-template-columns:1.2fr .8fr .8fr 1fr;gap:12px;padding:16px;border-bottom:1px solid #f0e4d2;align-items:center}.row:last-child{border-bottom:0}.name{font-weight:900;font-size:16px}.sub{color:var(--muted);font-size:13px;margin-top:5px}.pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:8px 12px;font-weight:900;font-size:13px;width:max-content}.pill.yes{background:#e9f7ef;color:var(--yes)}.pill.no{background:#fff0ee;color:var(--no)}.muted{color:var(--muted);font-weight:700}.comment{color:#51463e;font-size:14px;line-height:1.45}.empty{padding:44px 18px;text-align:center;color:var(--muted);font-weight:700}.footer{text-align:center;color:#a79a90;font-size:13px;font-weight:700;margin-top:18px}.setup{border:1px dashed rgba(184,144,79,.45);border-radius:18px;padding:16px;margin-bottom:16px;color:#755b3d;background:#fff8ed;font-weight:700}.setup code{background:#fff;border:1px solid #ead9c2;border-radius:8px;padding:2px 6px;color:#7b4a2b}
+    @media(max-width:720px){.head{display:block}.actions{justify-content:stretch;margin-top:14px}.btn{width:100%}.stats{grid-template-columns:repeat(2,1fr)}.panel-top{display:block}.search{margin-top:12px;width:100%}.row{grid-template-columns:1fr;gap:8px}.comment{padding:10px 12px;background:#fffaf3;border-radius:12px}.stat{padding:15px}.stat b{font-size:26px}}
   </style>
 </head>
 <body>
   <main class="wrap">
     <div class="head">
-      <div><h1>Ответы гостей</h1><div class="sub" id="updated">Загрузка ответов...</div></div>
-      <button class="btn" onclick="downloadExcel()">Скачать Excel</button>
+      <div class="title">
+        <h1>Ответы гостей</h1>
+        <p>Құдалық · Сары Арқа · Семей</p>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="downloadBtn">Скачать Excel</button>
+        <button class="btn" id="refreshBtn">Обновить</button>
+      </div>
     </div>
 
+    <div id="setup" class="setup" hidden>В файле <code>config.js</code> нужно вставить ссылку Google Apps Script в поле <code>APPS_SCRIPT_URL</code>. После этого здесь сразу появятся ответы гостей.</div>
+
     <section class="stats">
-      <div class="stat"><b id="sTotal">0</b><span>Всего ответов</span></div>
-      <div class="stat"><b id="sYes">0</b><span>Будут</span></div>
-      <div class="stat"><b id="sNo">0</b><span>Не смогут</span></div>
-      <div class="stat"><b id="sPeople">0</b><span>Персон</span></div>
+      <div class="stat"><b id="total">0</b><span>Всего ответов</span></div>
+      <div class="stat"><b id="yes">0</b><span>Будут</span></div>
+      <div class="stat"><b id="no">0</b><span>Не смогут</span></div>
+      <div class="stat"><b id="persons">0</b><span>Персон</span></div>
     </section>
 
-    <section class="list" id="list"></section>
+    <section class="panel">
+      <div class="panel-top"><h2>Список ответов</h2><input class="search" id="search" placeholder="Поиск по имени..." /></div>
+      <div class="list" id="list"><div class="empty">Загрузка...</div></div>
+    </section>
     <div class="footer">created by event-link · +7 700 961 90 49</div>
   </main>
 <script>
-const cfg=window.EVENT_LINK_CONFIG||{};
-let responses=[];
-function val(row,keys,def=''){for(const k of keys){if(row && row[k]!==undefined && row[k]!==null && String(row[k]).trim()!=='') return row[k];}return def;}
-function normalize(row){
-  const attendance=String(val(row,['attendance','status','Будет','Ответ'],'')).toLowerCase();
-  const isYes=attendance==='yes'||attendance==='да'||attendance==='буду'||attendance.includes('кел')||attendance.includes('буд');
-  const isNo=attendance==='no'||attendance==='нет'||attendance.includes('смогу')||attendance.includes('алмай');
-  const comp=String(val(row,['companion','withCompanion','С супругом'],'')).toLowerCase();
-  const companionName=val(row,['companionName','Имя супруга','spouseName'],'');
-  const withCompanion=comp==='with'||comp==='yes'||comp==='да'||comp.includes('супруг')||comp.includes('жұбай')||!!companionName;
+const CONFIG = window.EVENT_LINK_CONFIG || { APPS_SCRIPT_URL:"" };
+let rows = [];
+let filtered = [];
+const $ = (id)=>document.getElementById(id);
+function normalizeRow(r){
   return {
-    timestamp: val(row,['timestamp','date','Дата','submittedAt'],''),
-    name: val(row,['name','Имя','Аты'],'Без имени'),
-    status: isNo?'no':(isYes?'yes':val(row,['attendance','status'],'yes')),
-    companion: withCompanion?'with':'alone',
-    companionName,
-    comment: val(row,['comment','Комментарий','Пікір'],''),
-    lang: val(row,['lang'],'')
+    timestamp: r.timestamp || r['Дата'] || '',
+    name: r.name || r['Имя'] || '',
+    attendance: r.attendance || r['Статус'] || '',
+    companion: r.companion || r['Формат'] || '',
+    spouseName: r.spouseName || r['Имя супруга/супруги'] || '',
+    guestsCount: Number(r.guestsCount || r['Количество персон'] || 0),
+    comment: r.comment || r['Комментарий'] || '',
+    lang: r.lang || r['Язык'] || ''
   };
 }
-function dateText(v){if(!v)return '';const d=new Date(v);if(isNaN(d))return String(v);return d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
-function statusText(r){return r.status==='no'?'Не сможет':'Будет';}
-function peopleCount(r){return r.status==='yes'?(r.companion==='with'?2:1):0;}
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb = 'eventLinkCb_' + Date.now() + '_' + Math.round(Math.random()*9999);
+    const script = document.createElement('script');
+    window[cb] = (data)=>{ delete window[cb]; script.remove(); resolve(data); };
+    script.onerror = ()=>{ delete window[cb]; script.remove(); reject(new Error('load error')); };
+    script.src = url + (url.includes('?')?'&':'?') + 'action=list&callback=' + cb + '&t=' + Date.now();
+    document.body.appendChild(script);
+  });
+}
+async function load(){
+  if(!CONFIG.APPS_SCRIPT_URL){ $('setup').hidden=false; rows=[]; render(); return; }
+  $('setup').hidden=true;
+  $('list').innerHTML='<div class="empty">Загрузка...</div>';
+  try{
+    const data = await jsonp(CONFIG.APPS_SCRIPT_URL);
+    rows = (data.rows || []).map(normalizeRow).reverse();
+    render();
+  }catch(e){ $('list').innerHTML='<div class="empty">Не удалось загрузить ответы. Проверь Apps Script URL и деплой.</div>'; }
+}
+function statusText(v){return (v==='yes'||v==='Барамын'||v==='Приду')?'Будет':'Не сможет'}
+function companionText(r){
+  if(r.attendance !== 'yes') return '—';
+  if(r.companion === 'spouse') return r.spouseName ? 'С супругом(-ой): ' + r.spouseName : 'С супругом(-ой)';
+  return 'Один / одна';
+}
 function render(){
-  const rows=responses.map(normalize).reverse();
-  const yes=rows.filter(r=>r.status==='yes').length;
-  const no=rows.filter(r=>r.status==='no').length;
-  const people=rows.reduce((s,r)=>s+peopleCount(r),0);
-  sTotal.textContent=rows.length;sYes.textContent=yes;sNo.textContent=no;sPeople.textContent=people;
-  updated.textContent=rows.length?`Последнее обновление: ${new Date().toLocaleString('ru-RU',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})}`:'Пока ответов нет';
-  if(!rows.length){list.innerHTML=`<div class="empty">Ответов пока нет.<br>${(cfg.APPS_SCRIPT_URL||'').trim()?'Открой страницу позже после первых подтверждений.':'Вставь ссылку Apps Script в файл config.js, чтобы ответы появились здесь.'}</div>`;return;}
-  list.innerHTML=rows.map(r=>`<article class="guest"><div><div class="name">${esc(r.name)}${r.companionName?' + '+esc(r.companionName):''}</div><div class="meta">${dateText(r.timestamp)}${r.comment?' · '+esc(r.comment):''}<br>${r.status==='yes'?(r.companion==='with'?'С супругом/супругой':'Один/одна'):''}</div></div><div class="badge ${r.status==='yes'?'yes':'no'}">${statusText(r)}</div></article>`).join('');
+  const q = $('search').value.trim().toLowerCase();
+  filtered = rows.filter(r => !q || (r.name||'').toLowerCase().includes(q) || (r.spouseName||'').toLowerCase().includes(q));
+  const yes = rows.filter(r=>r.attendance==='yes').length;
+  const no = rows.filter(r=>r.attendance==='no').length;
+  const persons = rows.reduce((s,r)=>s+(Number(r.guestsCount)||0),0);
+  $('total').textContent=rows.length; $('yes').textContent=yes; $('no').textContent=no; $('persons').textContent=persons;
+  if(!filtered.length){ $('list').innerHTML='<div class="empty">Пока ответов нет</div>'; return; }
+  $('list').innerHTML = filtered.map(r=>`
+    <article class="row">
+      <div><div class="name">${escapeHtml(r.name || 'Без имени')}</div><div class="sub">${escapeHtml(r.timestamp || '')}</div></div>
+      <div><span class="pill ${r.attendance==='yes'?'yes':'no'}">${statusText(r.attendance)}</span></div>
+      <div class="muted">${escapeHtml(companionText(r))}</div>
+      <div class="comment">${escapeHtml(r.comment || '—')}</div>
+    </article>`).join('');
 }
-function esc(s){return String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
-window.renderAdmin=function(payload){responses=(payload&&payload.responses)||payload||[];render();};
-function load(){
-  const url=(cfg.APPS_SCRIPT_URL||'').trim();
-  if(!url){responses=JSON.parse(localStorage.getItem('eventLinkResponses')||'[]');render();return;}
-  const cb='renderAdmin';
-  const s=document.createElement('script');
-  s.src=url+(url.includes('?')?'&':'?')+'admin=1&callback='+cb+'&t='+Date.now();
-  s.onerror=()=>{updated.textContent='Не удалось загрузить ответы';};
-  document.body.appendChild(s);
-}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[m]));}
 function downloadExcel(){
-  const rows=responses.map(normalize);
-  if(!rows.length){alert('Пока нет ответов для скачивания');return;}
-  if(!window.XLSX){alert('Excel-модуль не загрузился. Проверь интернет и открой страницу заново.');return;}
-  const wb=XLSX.utils.book_new();
-  const all=[['№','Дата','Имя гостя','Ответ','Формат','Имя супруга/супруги','Кол-во персон','Комментарий'],...rows.map((r,i)=>[i+1,dateText(r.timestamp),r.name,statusText(r),r.status==='yes'?(r.companion==='with'?'С супругом/супругой':'Один/одна'):'',r.companionName,peopleCount(r),r.comment])];
-  const restaurant=[['№','Гость','Персон','Примечание'],...rows.filter(r=>r.status==='yes').map((r,i)=>[i+1,r.companionName?`${r.name} + ${r.companionName}`:r.name,peopleCount(r),r.comment])];
-  const no=[['№','Имя','Комментарий'],...rows.filter(r=>r.status==='no').map((r,i)=>[i+1,r.name,r.comment])];
-  addSheet(wb,'Ответы гостей',all,[6,18,26,16,22,26,14,36]);addSheet(wb,'Список для ресторана',restaurant,[6,34,12,36]);addSheet(wb,'Не смогут',no,[6,28,40]);
-  const d=new Date().toISOString().slice(0,10);XLSX.writeFile(wb,`kudalyk_responses_${d}.xlsx`);
+  const source = rows.length ? rows.slice().reverse() : [];
+  const all = source.map((r,i)=>({
+    '№': i+1,
+    'Дата ответа': r.timestamp,
+    'Имя гостя': r.name,
+    'Статус': statusText(r.attendance),
+    'Формат участия': companionText(r),
+    'Имя супруга/супруги': r.spouseName || '',
+    'Количество персон': r.guestsCount || 0,
+    'Комментарий / пожелание': r.comment || ''
+  }));
+  const restaurant = source.filter(r=>r.attendance==='yes').flatMap((r,i)=>{
+    const arr=[{'№':i+1,'Гость':r.name,'Примечание':r.companion==='spouse'?'С супругом(-ой)':'Один / одна'}];
+    if(r.companion==='spouse' && r.spouseName) arr.push({'№':'','Гость':r.spouseName,'Примечание':'Супруг(-а)'});
+    return arr;
+  });
+  const declined = source.filter(r=>r.attendance==='no').map((r,i)=>({'№':i+1,'Имя':r.name,'Комментарий':r.comment||''}));
+  if(window.XLSX){
+    const wb = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.json_to_sheet(all); const ws2 = XLSX.utils.json_to_sheet(restaurant); const ws3 = XLSX.utils.json_to_sheet(declined);
+    [ws1,ws2,ws3].forEach(ws=>{ ws['!cols']=[{wch:6},{wch:24},{wch:28},{wch:18},{wch:28},{wch:26},{wch:18},{wch:40}]; });
+    XLSX.utils.book_append_sheet(wb, ws1, 'Ответы гостей');
+    XLSX.utils.book_append_sheet(wb, ws2, 'Список для ресторана');
+    XLSX.utils.book_append_sheet(wb, ws3, 'Не смогут');
+    XLSX.writeFile(wb, 'kudalyk-saryarka-guest-answers.xlsx');
+  } else {
+    const csv = all.map(o=>Object.values(o).map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
+    const blob = new Blob(['\ufeff'+Object.keys(all[0]||{}).join(';')+'\n'+csv], {type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='kudalyk-saryarka-guest-answers.csv'; a.click(); URL.revokeObjectURL(a.href);
+  }
 }
-function addSheet(wb,name,data,widths){const ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=widths.map(w=>({wch:w}));XLSX.utils.book_append_sheet(wb,ws,name);}
-load();
+$('refreshBtn').addEventListener('click',load);$('downloadBtn').addEventListener('click',downloadExcel);$('search').addEventListener('input',render);load();
 </script>
 </body>
 </html>
