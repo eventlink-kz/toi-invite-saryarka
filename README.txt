@@ -1,30 +1,34 @@
-TOI INVITE SARYARKA — файлдар GitHub үшін
+UPLOAD TO GITHUB
 
-Жүктеу тәртібі:
-1) GitHub репозиторийге кір.
-2) Add file → Upload files.
-3) Осы архив ішіндегі БАРЛЫҚ файлдарды таңда да жүкте.
-   Папка жоқ, бәрі root ішінде.
-4) Commit changes бас.
-5) Settings → Pages → Deploy from branch → main → /root → Save.
+1) Распакуйте этот архив.
+2) Загрузите ВСЕ файлы из папки в репозиторий GitHub.
+3) Включите GitHub Pages: Settings -> Pages -> Deploy from a branch -> main -> /root.
+4) Сайт для гостей откроется по ссылке вашего GitHub Pages.
+5) Админка: /admin.html
 
-Сайт:
-https://eventlink-kz.github.io/toi-invite-saryarka/
+GOOGLE SHEETS / APPS SCRIPT
 
-Админка:
-https://eventlink-kz.github.io/toi-invite-saryarka/admin.html
+1) Создайте Google Sheet.
+2) Откройте Extensions -> Apps Script.
+3) Вставьте код из файла google-apps-script.js
+4) Запустите функцию setupSheet() один раз.
+5) Deploy -> New deployment -> Web app -> Anyone.
+6) Скопируйте Web App URL.
+7) Откройте config.js и вставьте URL в APPS_SCRIPT_URL.
+8) Снова загрузите config.js на GitHub.
 
-Маңызды:
-- Google Apps Script сілтемесін config.js ішіндегі APPS_SCRIPT_URL орнына қою керек.
-- Қонақтардың жауаптары админкада көрінеді.
-- Excel админкадағы "Скачать Excel" батырмасымен жүктеледі.
+2GIS
 
-Файлдар:
-index.html — негізгі сайт
-admin.html — админка
-config.js — баптаулар, Apps Script сілтемесі
-hero-bg.jpg — басты фон
-hall.jpg — зал суреті
-table.jpg — дастархан суреті
-tradition.jpg — дәстүр суреті
-google-apps-script.js — Google Sheets коды
+Ссылка уже настроена:
+https://2gis.kz/semey/geo/70000001051476055
+
+ФАЙЛЫ:
+index.html
+admin.html
+config.js
+google-apps-script.js
+hero-bg.jpg
+hall.jpg
+table.jpg
+tradition.jpg
+README.txt
