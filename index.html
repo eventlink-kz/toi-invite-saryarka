@@ -60,21 +60,27 @@
     .page{width:min(1100px,100%);margin:0 auto;padding:28px 14px 48px}
     .hero{
       position:relative;overflow:hidden;
-      min-height:650px;
+      min-height:unset;
       border-radius:42px;
       border:1px solid rgba(184,144,79,.18);
       box-shadow:var(--shadow);
-      background:#f7ead8 url("hero-bg.jpg") center/cover no-repeat;
+      background:linear-gradient(180deg,#fffdfa,#fbf2e7);
+      padding:24px;
     }
     .hero::before{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(90deg,rgba(255,250,242,.10),rgba(255,248,238,.78) 33%,rgba(255,248,238,.72) 66%,rgba(255,250,242,.06));
+      background:radial-gradient(circle at 0% 100%, rgba(212,187,148,.18), transparent 32%), radial-gradient(circle at 100% 0%, rgba(212,187,148,.12), transparent 28%);
       pointer-events:none;
     }
     .hero::after{
       content:"";position:absolute;inset:16px;border-radius:32px;border:1px solid rgba(184,144,79,.22);pointer-events:none;
     }
-    .hero-content{position:relative;z-index:2;width:min(650px,92%);margin:0 auto;padding:118px 16px 82px;text-align:center}
+    .hero::before,.hero::after{z-index:1}
+    .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:minmax(320px, 420px) 1fr;gap:28px;align-items:stretch}
+    .hero-visual{position:relative;overflow:hidden;border-radius:34px;border:1px solid rgba(184,144,79,.18);background:#efe3d4;min-height:640px;box-shadow:0 16px 38px rgba(98,71,32,.08)}
+    .hero-visual img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+
+    .hero-content{position:relative;z-index:2;width:100%;margin:0;padding:56px 34px 50px;text-align:center;background:rgba(255,251,245,.84);backdrop-filter:blur(6px);border:1px solid rgba(184,144,79,.18);border-radius:34px;box-shadow:0 16px 38px rgba(98,71,32,.08);display:flex;flex-direction:column;justify-content:center}
     .ornament{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);font-family:"Noto Serif",serif;margin-bottom:18px;font-size:20px}
     .ornament::before,.ornament::after{content:"";width:88px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.65}
     .eyebrow{letter-spacing:.28em;text-transform:uppercase;color:var(--gold-dark);font-weight:800;font-size:12px;margin-bottom:18px}
@@ -137,7 +143,7 @@
     .story-text{padding:38px;display:flex;flex-direction:column;justify-content:center}
     .story h3{font-family:"Noto Serif",serif;color:#58402b;font-size:28px;line-height:1.15;margin:0 0 18px;text-transform:uppercase}
     .story p{font-size:17px;line-height:1.75;color:#5b514a;margin:0}
-    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:relative;margin:26px 0 4px}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative;margin:26px 0 4px}
     .timeline::before{content:"";position:absolute;left:8%;right:8%;top:28px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.55}
     .step{position:relative;z-index:1;text-align:center;color:#3f362f}
     .step .icon{background:#fffdf8;width:56px;height:56px;margin-bottom:10px}
@@ -156,8 +162,8 @@
     .choice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.choice{position:relative}.choice input{position:absolute;opacity:0}.choice span{display:flex;align-items:center;justify-content:center;gap:9px;min-height:56px;border:1px solid rgba(184,144,79,.35);border-radius:16px;background:#fffdf9;color:#5e4e40;font-weight:800;cursor:pointer;text-align:center;padding:12px}.choice input:checked+span{background:linear-gradient(135deg,#b8904f,#a47735);color:#fff;border-color:transparent;box-shadow:0 12px 25px rgba(166,119,53,.18)}
     .hidden{display:none}.msg{min-height:24px;font-weight:700;color:#6d4a30}.msg.error{color:#9d3d3d}.form-note{color:#8b7e72;font-size:14px;text-align:center;margin:8px 0 0}.footer{text-align:center;color:#a79a90;font-size:13px;font-weight:700;margin:24px auto 0;padding:12px}
     .fade-up{animation:fadeUp .78s ease both}@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-    @media (max-width:900px){.details-grid{grid-template-columns:repeat(3,1fr)}.story,.location{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(5, minmax(90px,1fr));overflow-x:auto;padding-bottom:6px}.nav{display:none}}
-    @media (max-width:640px){.page{padding:18px 10px 96px}.topbar{width:calc(100% - 18px);margin-top:8px}.brand{font-size:14px}.hero{min-height:610px;border-radius:30px;background-position:center top}.hero-content{padding:92px 14px 70px}.hero::after{inset:10px;border-radius:24px}.lead{font-size:16px;line-height:1.62}.hero-actions{gap:10px}.btn{width:100%;padding:14px 16px}.section{padding:24px 14px;border-radius:24px}.details-grid{grid-template-columns:repeat(2,1fr);gap:10px}.detail-card{min-height:132px;padding:16px 10px}.photo-wide{height:210px;border-radius:18px}.story img{height:220px}.story-text{padding:24px}.story h3{font-size:23px}.timeline{margin-left:-6px;margin-right:-6px}.location{gap:12px}.map{min-height:230px}.choice-grid{grid-template-columns:1fr}.rsvp-card{padding:20px 14px}.sticky-rsvp{position:fixed;left:12px;right:12px;bottom:12px;z-index:50;box-shadow:0 18px 40px rgba(88,56,23,.20)}}
+    @media (max-width:900px){.details-grid{grid-template-columns:repeat(3,1fr)}.story,.location,.hero-inner{grid-template-columns:1fr}.hero-visual{min-height:420px}.timeline{grid-template-columns:repeat(4, minmax(90px,1fr));overflow-x:auto;padding-bottom:6px}.nav{display:none}}
+    @media (max-width:640px){.page{padding:18px 10px 96px}.topbar{width:calc(100% - 18px);margin-top:8px}.brand{font-size:14px}.hero{padding:12px;border-radius:30px}.hero-inner{grid-template-columns:1fr;gap:14px}.hero-visual{min-height:330px;border-radius:24px}.hero-content{padding:30px 14px 34px;border-radius:24px}.hero::after{inset:10px;border-radius:24px}.lead{font-size:16px;line-height:1.62}.hero-actions{gap:10px}.btn{width:100%;padding:14px 16px}.section{padding:24px 14px;border-radius:24px}.details-grid{grid-template-columns:repeat(2,1fr);gap:10px}.detail-card{min-height:132px;padding:16px 10px}.photo-wide{height:210px;border-radius:18px}.story img{height:220px}.story-text{padding:24px}.story h3{font-size:23px}.timeline{margin-left:-6px;margin-right:-6px}.location{gap:12px}.map{min-height:230px}.choice-grid{grid-template-columns:1fr}.rsvp-card{padding:20px 14px}.sticky-rsvp{position:fixed;left:12px;right:12px;bottom:12px;z-index:50;box-shadow:0 18px 40px rgba(88,56,23,.20)}}
   </style>
 </head>
 <body>
@@ -173,14 +179,19 @@
 
   <main class="page" id="top">
     <section class="hero fade-up">
-      <div class="hero-content">
-        <div class="ornament">✦</div>
-        <div class="eyebrow" data-i18n="eyebrow">Ескендір мен Анастасияның құдалығы</div>
-        <h1><span data-i18n="heroTitle">Құдалыққа</span><span class="script" data-i18n="heroScript">шақырамыз!</span></h1>
-        <p class="lead" data-i18n="heroText">Құрметті ағайын-туыс, құда-жекжат, дос-жаран!<br>Сіздерді Ескендір мен Анастасияның құдалық дастарханының қадірлі қонағы болуға шын жүректен шақырамыз!<br>Осы маңызды әрі қуанышты күнді бізбен бірге бөліссеңіздер, қуанышты боламыз.<br><br>Ізгі тілекпен,<br>Сембаевтар әулеті</p>
-        <div class="hero-actions">
-          <a class="btn primary sticky-rsvp" href="#rsvp" data-i18n="confirmTop">Қатысуымды растау</a>
-          <a class="btn" href="#location" data-i18n="placeTop">Мекенжайды көру</a>
+      <div class="hero-inner">
+        <div class="hero-visual">
+          <img src="hero-bg.jpg" alt="Жастардың қол ұстасқан сәті" loading="eager" />
+        </div>
+        <div class="hero-content">
+          <div class="ornament">✦</div>
+          <div class="eyebrow" data-i18n="eyebrow">Ескендір мен Анастасия</div>
+          <h1><span data-i18n="heroTitle">Құдалыққа</span><span class="script" data-i18n="heroScript">шақырамыз!</span></h1>
+          <p class="lead" data-i18n="heroText">Құрметті ағайын-туыс, құда-жекжат, дос-жаран!<br>Сіздерді Ескендір мен Анастасияның құдалық дастарханының қадірлі қонағы болуға шын жүректен шақырамыз!<br>Осы маңызды әрі қуанышты күнді бізбен бірге бөліссеңіздер, қуанышты боламыз.<br><br>Ізгі тілекпен,<br>Сембаевтар әулеті</p>
+          <div class="hero-actions">
+            <a class="btn primary sticky-rsvp" href="#rsvp" data-i18n="confirmTop">Қатысуымды растау</a>
+            <a class="btn" href="#location" data-i18n="placeTop">Мекенжайды көру</a>
+          </div>
         </div>
       </div>
     </section>
@@ -211,7 +222,7 @@
         <div class="step"><div class="icon"><svg viewBox="0 0 24 24"><path d="M5 15a7 7 0 0 1 14 0M4 18h16M12 8V6"/></svg></div><time>17:00</time><span data-i18n="p2">Дастархан</span></div>
         <div class="step"><div class="icon"><svg viewBox="0 0 24 24"><path d="M8 14c-2-2-2-5 0-7M16 14c2-2 2-5 0-7M12 20v-8"/></svg></div><time>18:00</time><span data-i18n="p3">Тілек-бата</span></div>
         <div class="step"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 8h4l2-2h4l2 2h4v11H4z"/><circle cx="12" cy="13" r="3"/></svg></div><time>19:00</time><span data-i18n="p4">Еркін әңгіме,<br>фото</span></div>
-        <div class="step"><div class="icon"><svg viewBox="0 0 24 24"><path d="M5 16l2-5h10l2 5M6 16h12v3H6zM8 19v2M16 19v2"/></svg></div><time>20:30</time><span data-i18n="p5">Шығарып салу</span></div>
+        
       </div>
     </section>
 
