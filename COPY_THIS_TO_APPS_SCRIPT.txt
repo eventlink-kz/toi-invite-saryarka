@@ -4,8 +4,8 @@ const SHEET_NAME = "Responses";
 function setupSheet() {
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sh = ss.getSheetByName(SHEET_NAME);
-
   if (!sh) sh = ss.insertSheet(SHEET_NAME);
+
   sh.clear();
 
   sh.appendRow([
@@ -22,12 +22,10 @@ function setupSheet() {
   ]);
 
   sh.setFrozenRows(1);
-
   const header = sh.getRange(1, 1, 1, 10);
   header.setFontWeight("bold");
   header.setBackground("#b8904f");
   header.setFontColor("#ffffff");
-
   sh.setColumnWidths(1, 10, 180);
   sh.setColumnWidth(7, 300);
 }
