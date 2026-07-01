@@ -1,0 +1,9 @@
+В config.js нужно вставить Web App URL вот сюда:
+
+window.EVENT_LINK_CONFIG = {
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycb.../exec",
+  EVENT: {
+    twoGisUrl: "https://2gis.kz/semey/geo/70000001051476055"
+  }
+};
+
